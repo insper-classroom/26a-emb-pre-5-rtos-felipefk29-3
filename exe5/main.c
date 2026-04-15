@@ -45,7 +45,7 @@ void btn_callback(uint gpio, uint32_t events) {
 void led_1_task(void *p) {
   gpio_init(LED_PIN_R);
   gpio_set_dir(LED_PIN_R, GPIO_OUT);
-  int delay = 250;
+  int delay = 100;
   int piscando_r = 0;
   while (true) {
     xQueueReceive(xQueueButId, &piscando_r, pdMS_TO_TICKS(delay));
@@ -60,7 +60,7 @@ void led_1_task(void *p) {
 void led_2_task(void *p) {
   gpio_init(LED_PIN_Y);
   gpio_set_dir(LED_PIN_Y, GPIO_OUT);
-  int delay = 250;
+  int delay = 100;
   int piscando_y = 0;
   while (true) {
     
@@ -90,14 +90,14 @@ void btn_task(void* p) {
     int piscando_r = 0;
     int piscando_y = 0;
     while (true) {
-        if (xSemaphoreTake(xSemaphore_r, pdMS_TO_TICKS(250)) == pdTRUE){
+        if (xSemaphoreTake(xSemaphore_r, pdMS_TO_TICKS(10)) == pdTRUE){
             piscando_r = !piscando_r;
             xQueueSend(xQueueButId,&piscando_r,0);
         }
-        if (xSemaphoreTake(xSemaphore_y, pdMS_TO_TICKS(250)) == pdTRUE){
+        if (xSemaphoreTake(xSemaphore_y, pdMS_TO_TICKS(10)) == pdTRUE){
             piscando_y = !piscando_y;
             xQueueSend(xQueueBtn2,&piscando_y,0);
-        }    
+        }
     }
 }
 
